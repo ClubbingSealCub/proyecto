@@ -11,12 +11,11 @@
 |
 */
 
-Route::resource('articulo', 'ArticuloController' );
-
+//Route::resource('articulo', 'ArticuloController' );
 //Route::get('/', 'PagesController@index');
-Route::get('/about', 'PagesController@about');
+Route::get('/about', ['uses' => 'ArticuloController@store']);
 
-Route::get('/additem', 'PagesController@additem');
+Route::get('/items/additem', 'PagesController@additem');
 
 Route::get('user/{userID?}', function($userID=null) {
     return $userID;

@@ -36,7 +36,13 @@ class ArticuloController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if(!empty($request)) {
+            $item = $request->item;
+            $desc = $request->desc;
+            $family = 1;
+            $seller_id = 1;
+            DB::table('articulos')->insertGetId(['id_vendedor' => $seller_id, 'nombre' => $item, 'descripcion'  => $desc, 'id_familia' => $family]);
+        } 
     }
 
     /**

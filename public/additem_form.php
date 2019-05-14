@@ -8,7 +8,8 @@
 
     </head>
     <body>
-    <form method="post" action="{{url(item)}}" class="additem">
+        <form method="get" action="items/additem" class="additem">
+            {{  csrf_field()  }}    
             <input type=text name="item" placeholder="Artículo">
             <input type=number name="price" placeholder="Precio">
             <input type=textarea name="desc" placeholder="Descripción">
@@ -19,15 +20,12 @@
     
     
 <?php
-if($_SERVER['REQUEST_METHOD'] == "POST") {
-
-    if(isset($_POST['submit'])) {
+/*
         $item = mysqli_real_escape_string($conn, $_POST['item']);
         $desc = mysqli_real_escape_string($conn, $_POST['desc']);
         $seller_id = 1;
         $family = 1;    
         DB::table('articulos')->insertGetId(['id_vendedor' => $seller_id, 'nombre' => $item, 'descripcion'  => $desc, 'id_familia' => $family]);
         echo($id);
-    }
-}
+*/
 ?>
