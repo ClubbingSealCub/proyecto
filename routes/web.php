@@ -11,6 +11,8 @@
 |
 */
 
+Route::resource('articulo', 'ArticuloController' );
+
 //Route::get('/', 'PagesController@index');
 Route::get('/about', 'PagesController@about');
 
