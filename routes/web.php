@@ -13,9 +13,7 @@
 
 //Route::resource('articulo', 'ArticuloController' );
 //Route::get('/', 'PagesController@index');
-Route::get('/about', ['uses' => 'ArticuloController@store']);
-
-Route::get('/items/additem', 'PagesController@additem');
+Route::get('/items/additem', ['uses' => 'ArticuloController@store']);
 
 Route::get('user/{userID?}', function($userID=null) {
     return $userID;

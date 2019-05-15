@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use DB;
+use App\Familia;
 use Illuminate\Http\Request;
 
-class ArticuloController extends Controller
+class FamiliaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +14,7 @@ class ArticuloController extends Controller
      */
     public function index()
     {
-        $data = Articulo::latest()->paginate(5);
-        return view('index', compact($data))
-                    ->with('i', (request()->input('page', 1) - 1) * 5);
+        //
     }
 
     /**
@@ -37,39 +35,35 @@ class ArticuloController extends Controller
      */
     public function store(Request $request)
     {
-        if(!empty($request)) {
-            $item = $request->item;
-            $desc = $request->desc;
-            $familyID = DB::select('select id from articulos where nombre = :family', ['family' => $request->family]);
-            $seller_id = \Auth::user()->id;
-            DB::table('articulos')->insertGetId([
-                'id_vendedor' => $seller_id, 
-                'nombre' => $item, 
-                'descripcion'  => $desc, 
-                'id_familia' => $familyID,
-                'created_at'=> date("Y-m-d H:i:s"),
-                ]);
-        } 
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Familia  $familia
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Familia $familia)
     {
         //
+    }
+
+    public function getAllFamilies() 
+    {
+        $families= DB::table('familias')->pluck('nombre', 'id')->toArray();
+        foreach ($families as $family) {
+            echo $family;
+        };
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Familia  $familia
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Familia $familia)
     {
         //
     }
@@ -78,10 +72,10 @@ class ArticuloController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Familia  $familia
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Familia $familia)
     {
         //
     }
@@ -89,10 +83,10 @@ class ArticuloController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Familia  $familia
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Familia $familia)
     {
         //
     }
