@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Familia;
 use Illuminate\Http\Request;
 use DB;
+use Illuminate\Support\Facades\Auth;
 
-class FamiliaController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -42,27 +42,26 @@ class FamiliaController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Familia  $familia
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Familia $familia)
+    public function show($id)
     {
-        //
-    }
-
-    public function getAllFamilies() 
-    {
-        $families = DB::table('familias')->pluck('nombre');
-        return view('/pages/additem_form')->with(compact('families'));
+        $current_id = Auth::id();
+        $fields = DB::select('select * from users where id=?', [$id]);
+        $items = DB::select('select * from articulos where id_vendedor=?', [$id]);
+        $auctions = DB::select('select * from subastas where id_subastador=?', [$id]);
+        $bids = DB::select('select * from pujas where id_usuario=?', [$id]);
+        return view('pages/user', compact('current_id', 'fields', 'items', 'auctions', 'bids'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Familia  $familia
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Familia $familia)
+    public function edit($id)
     {
         //
     }
@@ -71,10 +70,10 @@ class FamiliaController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Familia  $familia
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Familia $familia)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -82,10 +81,10 @@ class FamiliaController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Familia  $familia
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Familia $familia)
+    public function destroy($id)
     {
         //
     }

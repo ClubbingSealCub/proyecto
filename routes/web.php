@@ -13,17 +13,24 @@
 
 //Route::resource('articulo', 'ArticuloController' );
 //Route::get('/', 'PagesController@index');
-Route::get('/items/additem', ['uses' => 'ArticuloController@store']);
 
-Route::get('user/{userID?}', function($userID=null) {
-    return $userID;
-});
+Route::get('additem', ['uses' => 'FamiliaController@getAllFamilies']);
+
+Route::get('items/additem', ['uses' => 'ArticuloController@store']);
+
+Route::get('create_bid', ['uses' => 'ArticuloController@fetch']);
+
+Route::get('bids/addbid', ['uses' => 'SubastaController@store']);
+
+Route::get('bid/{id?}', ['uses' => 'SubastaController@show']);
+
+Route::get('item/{id?}', ['uses' => 'ArticuloController@show']);
+
+Route::get('user/{userID?}', ['uses' => 'UserController@fetch']);
 
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-
-Route::redirect('/home', '/user');
 
 Auth::routes();
 

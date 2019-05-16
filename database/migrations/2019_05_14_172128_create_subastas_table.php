@@ -19,6 +19,7 @@ class CreateSubastasTable extends Migration
             $table->foreign('id_subastador')->references('id')->on('users');
             $table->unsignedBigInteger('id_articulo');
             $table->foreign('id_articulo')->references('id')->on('articulos');
+
             $table->timestamps();
         });
     }
