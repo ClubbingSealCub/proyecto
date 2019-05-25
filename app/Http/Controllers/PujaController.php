@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Familia;
+use App\Puja;
 use Illuminate\Http\Request;
-use DB;
 
-class FamiliaController extends Controller
+class PujaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -42,33 +41,21 @@ class FamiliaController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Familia  $familia
+     * @param  \App\Puja  $puja
      * @return \Illuminate\Http\Response
      */
-    public function show(Familia $familia)
+    public function show(Puja $puja)
     {
         //
-    }
-
-    public function getAllFamilies() 
-    {
-        $families = DB::table('familias')->pluck('nombre');
-        return view('/pages/additem_form')->with(compact('families'));
-    }
-
-    public function getAllFamiliesSearch() 
-    {
-        $families = DB::table('familias')->pluck('nombre');
-        return view('/pages/bidsearch')->with(compact('families'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Familia  $familia
+     * @param  \App\Puja  $puja
      * @return \Illuminate\Http\Response
      */
-    public function edit(Familia $familia)
+    public function edit(Puja $puja)
     {
         //
     }
@@ -77,10 +64,10 @@ class FamiliaController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Familia  $familia
+     * @param  \App\Puja  $puja
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Familia $familia)
+    public function update(Request $request, Puja $puja)
     {
         //
     }
@@ -88,10 +75,10 @@ class FamiliaController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Familia  $familia
+     * @param  \App\Puja  $puja
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Familia $familia)
+    public function destroy(Puja $puja)
     {
         //
     }
