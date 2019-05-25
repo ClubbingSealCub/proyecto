@@ -30,27 +30,27 @@
                 }
             }
         ?>
-        <ul style="width:50%">
-            <?php
-            foreach ($items as $item) {
-                echo ("<li>".$item->nombre."</li>");
-            }
-            ?>
-        </ul>
+
         <?php
-            if($fields[0]->id === $current_id) {
-                if(count($bids) != 0) {
-                    echo("<p>Tus Subastas</p>");
-                    echo("<ul>");
-                    foreach ($bids as $bid) {
-                        echo("<li>".$bid->id."</li>");
-                    }
+            if(count($items) == 0) {
+                if($fields[0]->id === $current_id){
+                    echo("<p>Todavía no tienes artículos en subasta.</p>");
                 } else {
-                    echo("<p>Todavía no tienes subastas!</p>");
+                    echo("<p>".$fields[0].name." todavía no tiene artículos en subasta.</p>");
                 }
+            } else {
+                if($fields[0]->id === $current_id) {
+                    echo("<p>Tus Artículos en subasta</p>");
+                } else {
+                    echo ("<p>Los Artículos en subasta de ".$fields[0]->name."</p>");
+                }
+                echo("<ul style='width:50%'>");
+                foreach ($items as $item) {
+                    echo("<li>".$item->nombre." - Precio actual: ".$item->precio."€ - Finaliza: ".$item->ends_at."</li>");
+                }
+                echo("</ul>");
             }
         ?>
-        <a href="{{ url('pages/create_bid') }}">Crear subasta</a>
-        </ul>
+        <a href="{{ url('pages/additem') }}">Crear subasta</a>
     </body>
 </html>

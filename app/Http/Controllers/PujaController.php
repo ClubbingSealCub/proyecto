@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Puja;
 use Illuminate\Http\Request;
+use Auth;
 
 class PujaController extends Controller
 {
@@ -35,7 +36,18 @@ class PujaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if(!empty($request)) {
+            $item_id = $request->item;
+            $user_id = \Auth::user()->id;
+            $price = $request->price;
+            DB::table('pujas')->insertGetID([
+                'id_usuario' => $user_id,
+                'id_articulo' => $item_id,
+                'precio' => $price,
+                'created_at' => date("Y-m-d H:i:s")
+            ]);
+            return view('item/'.$id);
+        }
     }
 
     /**

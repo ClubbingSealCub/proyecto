@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use DB;
 use Illuminate\Http\Request;
 use Auth;
+use App\Familia;
 
 class ArticuloController extends Controller
 {
@@ -41,17 +42,64 @@ class ArticuloController extends Controller
         if(!empty($request)) {
             $item = $request->item;
             $desc = $request->desc;
-            $familyID = DB::select('select id from familias where nombre = ?', [$request->family]);
+            $price = $request->price;
+            $family = Familia::where('nombre', $request->family)->first()->id;
             $seller_id = \Auth::user()->id;
-            DB::table('articulos')->insertGetId([
+            $time = $request->time;
+            $created_at = date("Y-m-d H:i:s");
+            //para transformar en horas, *3.600 - días, *86.400 - minutos, *60
+            $ends_at = date("Y-m-d H:i:s", strtotime($created_at) + $time*60); 
+
+            $id = DB::table('articulos')->insertGetId([
                 'id_vendedor' => $seller_id, 
                 'nombre' => $item, 
                 'descripcion'  => $desc, 
-                'id_familia' => 1,
-                'created_at'=> date("Y-m-d H:i:s"),
-                ]);
+                'precio'=>$price,
+                'id_familia' => $family,
+                'created_at'=> $created_at,
+                'ends_at'=>$ends_at
+            ]);
+            return view('item/'.$id);
         }
-        //TODO: return view (tus articulos);
+    }
+
+    public function searchByTerms(Request $request) 
+    {
+        if(!empty($request)) {
+            $sqlTerms = array();
+
+            if($request->has('family')) {
+                $family = Familia::where('nombre', $request->input('family'))->first()->id;
+                $sql_terms[] = "id_familia EQUALS '%$family%'";
+            }
+            
+            if($request->has('searchterm')) {
+                $searchTerms = preg_replace("/[^A-Za-z0-9 ]/", '', $request->input('searchterm'));
+                $searchTermsArray = preg_split('/\s+/', $searchTerms, -1, PREG_SPLIT_NO_EMPTY);
+                $searchTermBits = array();
+                foreach($searchTermsArray as $term) {
+                    $term = trim($term);
+                    if(!empty($term)) {
+                        $searchTermBits[] = "nombre LIKE '%$term%'";
+                    }
+                }
+                $sql_article = implode(' AND ', $searchTermBits);
+                $sql_terms[] = $sql_article; 
+            } 
+
+            if($request->has('minimumPrice')) {
+                $minimumPrice = $request->input('minimumPrice');
+                $sqlTerms[] = "precio >= '%$minimumPrice%'";
+            }
+            if($request->has('maximumPrice')) {
+                $maximumPrice = $request->input('maximumPrice');
+                $sqlTerms[] = "precio <= '%$maximumPrice%'";
+            }
+
+            $sql_query = implode(' AND ', $sqlTerms);
+            $bids = DB::table('articulos')->whereRaw($sql_query);
+            echo view('search', ['result'=>$bids]);
+        }
     }
 
     /**
@@ -66,7 +114,9 @@ class ArticuloController extends Controller
             $fields = DB::select('select * from articulos where id=?', [$id]);
             $family_name = DB::select('select nombre from familias where id=?', [$fields[0]->id_familia]);
             $user_data = DB::select('select name, email from users where id=?', [$fields[0]->id_vendedor]);
+            //$bid_data = DB::select('select * from pujas where id_usuario=? and id_articulo=?', [$user_data[0]->id, $id]);
             return view('pages/item', compact('fields', 'family_name', 'user_data'));
+    
         }
     }
 

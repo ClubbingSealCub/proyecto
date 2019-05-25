@@ -18,6 +18,8 @@
             }
             ?>
             </select>
+            <input type=number name="price" placeholder="Precio">
+            <input type=number name="time" placeholder="Tiempo Activo (minutos)">
             <input type=submit value="submit">
         </form>
     </body>

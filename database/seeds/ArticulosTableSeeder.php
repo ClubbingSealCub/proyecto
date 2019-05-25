@@ -16,7 +16,9 @@ class ArticulosTableSeeder extends Seeder
             'descripcion'=> 'Un teclado gaming con teclas para macro',
             'id_vendedor'=> 1,
             'id_familia'=> 1,
+            'precio'=> 100,
             'created_at'=> date("Y-m-d H:i:s"),
+            'ends_at' => date("Y-m-d")." 18:30:00",
         ]);
     }
 }

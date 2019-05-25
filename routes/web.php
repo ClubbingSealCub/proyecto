@@ -20,21 +20,13 @@ Route::get('items/additem', ['uses' => 'ArticuloController@store']);
 
 Route::get('create_bid', ['uses' => 'ArticuloController@fetch']);
 
-Route::get('bids/addbid', ['uses' => 'SubastaController@store']);
-
-Route::get('bid/{id?}', ['uses' => 'SubastaController@show']);
-
 Route::get('item/{id?}', ['uses' => 'ArticuloController@show']);
 
 Route::get('user/{userID?}', ['uses' => 'UserController@show']);
 
 Route::get('bidsearch', ['uses' => 'FamiliaController@getAllFamiliesSearch']);
 
-Route::post('search', 'SubastaController@SearchByTerms');
-
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::post('search', ['uses' => 'ArticuloController@SearchByTerms']);
 
 Auth::routes();
 

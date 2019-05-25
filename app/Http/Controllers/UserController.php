@@ -50,9 +50,8 @@ class UserController extends Controller
         $current_id = Auth::id();
         $fields = DB::select('select * from users where id=?', [$id]);
         $items = DB::select('select * from articulos where id_vendedor=?', [$id]);
-        $auctions = DB::select('select * from subastas where id_subastador=?', [$id]);
         $bids = DB::select('select * from pujas where id_usuario=?', [$id]);
-        return view('pages/user', compact('current_id', 'fields', 'items', 'auctions', 'bids'));
+        return view('pages/user', compact('current_id', 'fields', 'items', 'bids'));
     }
 
     /**
