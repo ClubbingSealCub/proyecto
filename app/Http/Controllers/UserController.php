@@ -48,9 +48,24 @@ class UserController extends Controller
     public function show($id)
     {
         $current_id = Auth::id();
+        if(is_null($id)) {
+            $id = $current_id;
+        }
         $fields = DB::select('select * from users where id=?', [$id]);
         $items = DB::select('select * from articulos where id_vendedor=?', [$id]);
         $bids = DB::select('select * from pujas where id_usuario=?', [$id]);
+        return view('pages/user', compact('current_id', 'fields', 'items', 'bids'));
+    }
+
+    public function showCurrent()
+    {
+        $current_id = Auth::id();
+        if(is_null($current_id)) {
+            return view('login');
+        }
+        $fields = DB::select('select * from users where id=?', [$current_id]);
+        $items = DB::select('select * from articulos where id_vendedor=?', [$current_id]);
+        $bids = DB::select('select * from pujas where id_usuario=?', [$current_id]);
         return view('pages/user', compact('current_id', 'fields', 'items', 'bids'));
     }
 

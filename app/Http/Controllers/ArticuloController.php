@@ -59,7 +59,7 @@ class ArticuloController extends Controller
                 'created_at'=> $created_at,
                 'ends_at'=>$ends_at
             ]);
-            return view('item/'.$id);
+            return view('user');
         }
     }
 
@@ -111,20 +111,18 @@ class ArticuloController extends Controller
     public function show($id)
     {
         if($id) {
+            $current_id = Auth::id();
             $fields = DB::select('select * from articulos where id=?', [$id]);
             $family_name = DB::select('select nombre from familias where id=?', [$fields[0]->id_familia]);
-            $user_data = DB::select('select name, email from users where id=?', [$fields[0]->id_vendedor]);
-            //$bid_data = DB::select('select * from pujas where id_usuario=? and id_articulo=?', [$user_data[0]->id, $id]);
-            return view('pages/item', compact('fields', 'family_name', 'user_data'));
-    
+            $user_data = DB::select('select * from users where id=?', [$fields[0]->id_vendedor]);
+            $bid_data = DB::select('select * from pujas where id_usuario=? and id_articulo=? and valor=?', [$current_id, $id, $fields[0]->precio]);
+            return view('pages/item', compact('current_id', 'fields', 'family_name', 'user_data', 'bid_data'));
         }
     }
 
     public function fetch()
     {
-        $user_id = Auth::id();        
-        $items = DB::select('select * from articulos where id_vendedor=?', [$user_id]);
-        return view('pages/create_bid', compact('items'));    
+        //
     }
 
     /**

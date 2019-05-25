@@ -18,9 +18,9 @@ Route::get('additem', ['uses' => 'FamiliaController@getAllFamilies']);
 
 Route::get('items/additem', ['uses' => 'ArticuloController@store']);
 
-Route::get('create_bid', ['uses' => 'ArticuloController@fetch']);
-
 Route::get('item/{id?}', ['uses' => 'ArticuloController@show']);
+
+Route::get('user', ['uses' => 'UserController@showCurrent']);
 
 Route::get('user/{userID?}', ['uses' => 'UserController@show']);
 

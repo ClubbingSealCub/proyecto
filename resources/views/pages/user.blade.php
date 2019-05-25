@@ -51,6 +51,6 @@
                 echo("</ul>");
             }
         ?>
-        <a href="{{ url('pages/additem') }}">Crear subasta</a>
+        <a href="{{ url('additem') }}">Crear subasta</a>
     </body>
 </html>
