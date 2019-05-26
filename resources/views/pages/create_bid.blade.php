@@ -16,7 +16,7 @@
                 }
             ?>
             </select>
-            <input type=number name="price" placeholder="Precio Inicial">
+            <input type=number step="0.01" name="price" placeholder="Precio Inicial">
             <input type=number name="days" placeholder="Segundos Activo">
             <input type=submit value="submit">
         </form>

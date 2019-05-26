@@ -15,7 +15,7 @@ class AddEndsAtAndPrecioToArticulosTable extends Migration
     {
         Schema::table('articulos', function (Blueprint $table) {
             $table->timestamp('ends_at')->useCurrent();
-            $table->float('precio');
+            $table->float('precio', 20, 2);
         });
     }
 

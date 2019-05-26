@@ -10,6 +10,17 @@ class Puja extends Model
     protected $table = 'pujas';
 
     protected $fillable = [
-        'id_subasta', 'id_articulo', 'id_usuario', 'valor', 'created_at'
+        'articulo_id', 'user_id', 'valor', 'created_at'
     ];
+
+    public function articulo()
+    {
+        return $this->belongsTo('App\Articulo');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
+
 }

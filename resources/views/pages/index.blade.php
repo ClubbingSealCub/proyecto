@@ -1,39 +1,80 @@
-<!doctype html>
-<!-- @extends('parent') -->
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.app')
+<?php
+use App\Familia;
+?>
 
-        <title>{{config('app.name', 'proyecto')}}</title>
+@section('content')
+<h1>Subastas que acabarán proximamente. ¡Date prisa! </h1>
+<div id="salesContainer" class="col-md-12">
+    <div class="table table-responsive">
+    <table class="table table-bordered table-striped h4 ">
+        <thead>
+            <th class="col-md-1">Nombre</th>
+            <th class="col-md-4">Descripción</th>
+            <th class="col-md-1">Precio</th>
+            <th class="col-md-3">Familia</th>
+            <th class="col-md-3">Acaba</th>
+        </thead>
+        <tbody>
+        <?php
+        if(!empty($current)) {
+            foreach ($current as $line) {
+        ?>
+            <tr>
+                    <td>
+                            <a href="{{route('showItem', $line->id)}}">
+                        {{$line->nombre}}
+                            </a>
+                    </td>
+                    <td>{{$line->descripcion}}</td>
+                    <td>{{$line->precio}}</td>
+                    <td>{{$line->familia->nombre}}</td>
+                    <td>{{$line->ends_at}}</td>
+            </tr>
+        <?php
+            }
+        }
+        ?>
+        </tbody>
+        
+    </table></div>
+</div>
 
-    </head>
-    <body>
-        <div id="salesContainer" width="50%">
-            <table class="table table-bordered table-striped">
-                <tr>
-                    <th width:"15%">Nombre</th>
-                    <th width:"40%">Descripción</th>
-                    <th width:"15%">Precio</th>
-                    <th width:"15%">Familia</th>
-                    <th width:"15%">Acaba</th>
-                </tr>
 
-                <?php
-                    if(!empty($data)) {
-                        foreach ($data as $line) {
-                            echo("<tr>
-                                    <td>".$line->nombre."</td>
-                                    <td>".$line->descripcion."</td>
-                                    <td>".$line->precio."</td>
-                                    <td>".Familia::where('id', $line->id_familia)->first()->nombre."</td>
-                                    <td>".$line->ends_at."</td>
-                                </tr>");
-                        }
-                    }
-                ?>
+<h1>Productos que ya se han vendido, ¡sé más rápido la próxima vez ! </h1>
+<div id="pastSales" class="col-md-12">
+    <div class="table table-responsive">
+    <table class="table table-bordered table-striped h4 ">
+        <thead>
+            <th class="col-md-1">Nombre</th>
+            <th class="col-md-4">Descripción</th>
+            <th class="col-md-1">Precio</th>
+            <th class="col-md-3">Familia</th>
+            <th class="col-md-3">Acaba</th>
+        </thead>
+        <tbody>
+        <?php
+        if(!empty($past)) {
+            foreach ($past as $line) {
+        ?>
+            <tr>
+                    <td>
+                            <a href="{{route('showItem', $line->id)}}">
+                        {{$line->nombre}}
+                            </a>
+                    </td>
+                    <td>{{$line->descripcion}}</td>
+                    <td>{{$line->precio}}</td>
+                    <td>{{$line->familia->nombre}}</td>
+                    <td>{{$line->ends_at}}</td>
+            </tr>
+        <?php
+            }
+        }
+        ?>
+        </tbody>
+        
+    </table></div>
+</div>
 
-            </table>
-        </div>
-    </body>
-</html>
+@endsection

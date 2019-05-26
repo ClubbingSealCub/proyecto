@@ -15,10 +15,10 @@ class CreatePujasTable extends Migration
     {
         Schema::create('pujas', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('id_articulo');
-            $table->foreign('id_articulo')->references('id')->on('articulos');
-            $table->unsignedBigInteger('id_usuario');
-            $table->foreign('id_usuario')->references('id')->on('users');
+            $table->unsignedBigInteger('articulo_id');
+            $table->foreign('articulo_id')->references('id')->on('articulos');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->integer('valor');
             $table->timestamps();
         });

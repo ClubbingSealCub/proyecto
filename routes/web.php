@@ -16,19 +16,19 @@
 
 Route::get('/', ['uses' => 'ArticuloController@index']);
 
-Route::get('additem', ['uses' => 'FamiliaController@getAllFamilies']);
+Route::get('additem', ['uses' => 'FamiliaController@getAllFamilies'])->name('addItem');
 
 Route::get('items/additem', ['uses' => 'ArticuloController@store']);
 
-Route::get('item/{id?}', ['uses' => 'ArticuloController@show']);
+Route::get('item/{id}', ['uses' => 'ArticuloController@show'])->name('showItem');
 
-Route::get('user', ['uses' => 'UserController@showCurrent']);
+Route::get('user/{userID}', ['uses' => 'UserController@show'])->name('user');
 
-Route::get('user/{userID?}', ['uses' => 'UserController@show']);
+Route::post('createbid', ['uses' => 'PujaController@create'])->name('createBid');
 
-Route::get('bidsearch', ['uses' => 'FamiliaController@getAllFamiliesSearch']);
+Route::get('bidsearch', ['uses' => 'FamiliaController@getAllFamiliesSearch'])->name('bidSearch');
 
-Route::post('search', ['uses' => 'ArticuloController@SearchByTerms']);
+Route::get('search', ['uses' => 'ArticuloController@SearchByTerms'])->name('search');
 
 Auth::routes();
 

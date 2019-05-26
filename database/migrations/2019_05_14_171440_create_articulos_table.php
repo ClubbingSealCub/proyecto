@@ -16,10 +16,10 @@ class CreateArticulosTable extends Migration
         Schema::create('articulos', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nombre');
-            $table->unsignedBigInteger('id_vendedor');
-            $table->foreign('id_vendedor')->references('id')->on('users');
-            $table->unsignedBigInteger('id_familia');
-            $table->foreign('id_familia')->references('id')->on('familias');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger('familia_id');
+            $table->foreign('familia_id')->references('id')->on('familias');
             $table->longtext('descripcion');
             $table->timestamps();
         });

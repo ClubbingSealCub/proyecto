@@ -12,5 +12,10 @@ class Familia extends Model
     protected $fillable = [
         'nombre', 'descripcion', 
     ];
+    
+    public function articulos()
+    {
+        return $this->hasMany('App\Articulo');
+    }
 
 }

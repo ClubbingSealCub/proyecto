@@ -1,56 +1,34 @@
-<!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.app')
+@section('content')
 
-    <title>{{ $fields[0]->name }}</title>
-
-    </head>
-    <body>
-        <h1>{{ $fields[0]->name }} ({{ $fields[0]->email }})</h1>
-        <?php
-            if($fields[0]->id == $current_id) {
-                echo("<p>(Eres tú!)</p>");
-            }
+<div class="row">
+    <h1>{{ $user->name }} ({{ $user->email }})</h1>
+</div>
+<div class="row">
+    
+    <?php
+    if(count($user->articulos) == 0) {
         ?>
-
+        <p>{{$user->name}} todavía no tiene artículos en subasta.</p>
         <?php
-            if(count($items) == 0) {
-                if($fields[0]->id === $current_id){
-                    echo("<p>Todavía no tienes artículos</p>");
-                } else {
-                    echo("<p>".$fields[0].name." todavía no tiene artículos.</p>");
-                }
-            } else {
-                if($fields[0]->id === $current_id){
-                    echo("<p>Tus Artículos</p>");
-                } else {
-                    echo("<p>Los Artículos de ".$fields[0]->name."</p>");
-                }
-            }
+    } else {
         ?>
-
+        <p>Los Artículos en subasta de {{ $user->name }} </p><br/>
         <?php
-            if(count($items) == 0) {
-                if($fields[0]->id === $current_id){
-                    echo("<p>Todavía no tienes artículos en subasta.</p>");
-                } else {
-                    echo("<p>".$fields[0].name." todavía no tiene artículos en subasta.</p>");
-                }
-            } else {
-                if($fields[0]->id === $current_id) {
-                    echo("<p>Tus Artículos en subasta</p>");
-                } else {
-                    echo ("<p>Los Artículos en subasta de ".$fields[0]->name."</p>");
-                }
-                echo("<ul style='width:50%'>");
-                foreach ($items as $item) {
-                    echo("<li>".$item->nombre." - Precio actual: ".$item->precio."€ - Finaliza: ".$item->ends_at."</li>");
-                }
-                echo("</ul>");
+    }
+    ?>
+    <div class="row">
+        <?php
+        foreach ($user->articulos as $item) {
+            ?>
+            <div class='item-border col-md-3 col-xs-12'>
+                <a href="{{route('showItem', $item->id)}}">
+                    <h3>{{$item->nombre}}</h3>
+                    <img src="{{asset('images/item.png')}}" class="float-right col-md-3" style="top:0; right:0; position:absolute;">
+                    <h4>Precio actual: {{$item->precio}}€</h4>
+                    <h4 class="float-right">{{$item->ends_at < date("Y-m-d H:i:s") ? "Finalizado" : "Activo" }}</h4>
+                </a></div>
+                <?php          
             }
-        ?>
-        <a href="{{ url('additem') }}">Crear subasta</a>
-    </body>
-</html>
+            ?>
+            @endsection

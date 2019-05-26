@@ -12,7 +12,7 @@
                     document.getElementById('searchResult').innerHTML = this.responseText;
                 }
             };
-            xhr.open("POST", "search", true);
+            xhr.open("GET", "search", true);
             xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             var attributes = "_token={{ csrf_token() }}" + 
                             "&searchterm=" + terms + 

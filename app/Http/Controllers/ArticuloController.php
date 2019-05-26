@@ -19,13 +19,10 @@ class ArticuloController extends Controller
     {
 
         $curr_date = date("Y-m-d H:i:s");
-        $data = DB::table('articulos')->where('ends_at', '>', $curr_date)->orderBy('ends_at', 'asc')->get();
-        return view('pages/index', compact('data'));
-        /* 
-        $data = Articulo::latest()->paginate(5);
-        return view('pages/index', compact($data))
-                    ->with('i', (request()->input('page', 1) - 1) * 5);
-        */
+        $current = Articulo::where('ends_at', '>', $curr_date)->orderBy('ends_at', 'asc')->get();
+        $past = Articulo::where('ends_at', '<', $curr_date)->orderBy('ends_at', 'desc')->take(5)->get();
+        return view('pages/index', compact('current', 'past'));
+   
     }
 
     /**
@@ -57,7 +54,7 @@ class ArticuloController extends Controller
             //para transformar en horas, *3.600 - días, *86.400 - minutos, *60
             $ends_at = date("Y-m-d H:i:s", strtotime($created_at) + $time*60); 
 
-            DB::table('articulos')->insertGetId([
+            $articulo = DB::table('articulos')->insertGetId([
                 'id_vendedor' => $seller_id, 
                 'nombre' => $item, 
                 'descripcion'  => $desc, 
@@ -66,7 +63,7 @@ class ArticuloController extends Controller
                 'created_at'=> $created_at,
                 'ends_at'=>$ends_at
             ]);
-            return redirect('/user');
+            return redirect('showItem', $articulo)->with('success','¡Tu subasta se ha creado satisfactoriamente!');;
         }
     }
 
@@ -105,7 +102,7 @@ class ArticuloController extends Controller
 
             $sql_query = implode(' AND ', $sqlTerms);
             $bids = DB::table('articulos')->whereRaw($sql_query);
-            echo view('search', ['result'=>$bids]);
+            return view('pages/search', ['result'=>$bids]);
         }
     }
 
@@ -119,11 +116,13 @@ class ArticuloController extends Controller
     {
         if($id) {
             $current_id = Auth::id();
-            $fields = DB::select('select * from articulos where id=?', [$id]);
-            $family_name = DB::select('select nombre from familias where id=?', [$fields[0]->id_familia]);
-            $user_data = DB::select('select * from users where id=?', [$fields[0]->id_vendedor]);
-            $bid_data = DB::select('select * from pujas where id_usuario=? and id_articulo=? and valor=?', [$current_id, $id, $fields[0]->precio]);
-            return view('pages/item', compact('current_id', 'fields', 'family_name', 'user_data', 'bid_data'));
+            $item = Articulo::find($id);
+
+            // $fields = DB::select('select * from articulos where id=?', [$id]);
+            // $family_name = DB::select('select nombre from familias where id=?', [$fields[0]->id_familia]);
+            // $user_data = DB::select('select * from users where id=?', [$fields[0]->id_vendedor]);
+            // $bid_data = DB::select('select * from pujas where id_usuario=? and id_articulo=? and valor=?', [$current_id, $id, $fields[0]->precio]);
+            return view('pages/item', compact('current_id', 'item'));
         }
     }
 
