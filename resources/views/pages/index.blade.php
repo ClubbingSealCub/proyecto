@@ -9,22 +9,31 @@
 
     </head>
     <body>
-    <table class="table table-bordered table-striped">
-        <tr>
-            <th width:"15%">Nombre</th>
-            <th width:"35%">Vendedor</th>
-            <th width:"35%">Descripción</th>
-            <th width:"15%">Familia</th>
-        </tr>
-        @foreach $data as $row
-        <tr>
-            <td>{{ $row->name }}</td>
-            <td>{{ $row->seller }}</td>
-            <td>{{ $row->desc }}</td>
-            <td>{{ $row->family }}</td>
-        </tr>
-        @endforeach
-    </table>
-    {!! $data->links() !!}
+        <div id="salesContainer" width="50%">
+            <table class="table table-bordered table-striped">
+                <tr>
+                    <th width:"15%">Nombre</th>
+                    <th width:"40%">Descripción</th>
+                    <th width:"15%">Precio</th>
+                    <th width:"15%">Familia</th>
+                    <th width:"15%">Acaba</th>
+                </tr>
+
+                <?php
+                    if(!empty($data)) {
+                        foreach ($data as $line) {
+                            echo("<tr>
+                                    <td>".$line->nombre."</td>
+                                    <td>".$line->descripcion."</td>
+                                    <td>".$line->precio."</td>
+                                    <td>".Familia::where('id', $line->id_familia)->first()->nombre."</td>
+                                    <td>".$line->ends_at."</td>
+                                </tr>");
+                        }
+                    }
+                ?>
+
+            </table>
+        </div>
     </body>
 </html>

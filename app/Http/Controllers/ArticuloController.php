@@ -6,6 +6,7 @@ use DB;
 use Illuminate\Http\Request;
 use Auth;
 use App\Familia;
+use App\Articulo;
 
 class ArticuloController extends Controller
 {
@@ -16,9 +17,15 @@ class ArticuloController extends Controller
      */
     public function index()
     {
+
+        $curr_date = date("Y-m-d H:i:s");
+        $data = DB::table('articulos')->where('ends_at', '>', $curr_date)->orderBy('ends_at', 'asc')->get();
+        return view('pages/index', compact('data'));
+        /* 
         $data = Articulo::latest()->paginate(5);
-        return view('index', compact($data))
+        return view('pages/index', compact($data))
                     ->with('i', (request()->input('page', 1) - 1) * 5);
+        */
     }
 
     /**
@@ -50,7 +57,7 @@ class ArticuloController extends Controller
             //para transformar en horas, *3.600 - días, *86.400 - minutos, *60
             $ends_at = date("Y-m-d H:i:s", strtotime($created_at) + $time*60); 
 
-            $id = DB::table('articulos')->insertGetId([
+            DB::table('articulos')->insertGetId([
                 'id_vendedor' => $seller_id, 
                 'nombre' => $item, 
                 'descripcion'  => $desc, 
@@ -59,7 +66,7 @@ class ArticuloController extends Controller
                 'created_at'=> $created_at,
                 'ends_at'=>$ends_at
             ]);
-            return view('user');
+            return redirect('/user');
         }
     }
 

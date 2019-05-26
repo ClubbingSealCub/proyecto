@@ -14,6 +14,8 @@
 //Route::resource('articulo', 'ArticuloController' );
 //Route::get('/', 'PagesController@index');
 
+Route::get('/', ['uses' => 'ArticuloController@index']);
+
 Route::get('additem', ['uses' => 'FamiliaController@getAllFamilies']);
 
 Route::get('items/additem', ['uses' => 'ArticuloController@store']);
