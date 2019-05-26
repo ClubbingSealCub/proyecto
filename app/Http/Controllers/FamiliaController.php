@@ -52,13 +52,15 @@ class FamiliaController extends Controller
 
     public function getAllFamilies() 
     {
-        $families = DB::table('familias')->pluck('nombre');
+        $families = Familia::all();
+        // $families = DB::table('familias')->pluck('nombre');
         return view('/pages/additem_form')->with(compact('families'));
     }
 
     public function getAllFamiliesSearch() 
     {
-        $families = DB::table('familias')->pluck('nombre');
+        $families = Familia::all();
+        // $families = DB::table('familias')->pluck('nombre');
         return view('/pages/bidsearch')->with(compact('families'));
     }
 

@@ -37,7 +37,12 @@ class Articulo extends Model
     }
     
     public function highestBid(){
-        return Puja::where('articulo_id', $this->id)->orderBy('valor', 'desc')->get()->first();
+        $puja = Puja::where('articulo_id', $this->id)->orderBy('valor', 'desc')->get();
+        if(count($puja)>0){
+            return $puja->first()->valor;
+        }else{ 
+            return $this->precio;
+        }
         
     }
 }

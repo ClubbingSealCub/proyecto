@@ -47,7 +47,8 @@ class ArticuloController extends Controller
             $item = $request->item;
             $desc = $request->desc;
             $price = $request->price;
-            $family = Familia::where('nombre', $request->family)->first()->id;
+            $family = $request->family;
+            // $family = Familia::where('nombre', $request->family)->first()->id;
             $seller_id = \Auth::user()->id;
             $time = $request->time;
             $created_at = date("Y-m-d H:i:s");
@@ -70,39 +71,45 @@ class ArticuloController extends Controller
     public function searchByTerms(Request $request) 
     {
         if(!empty($request)) {
-            $sqlTerms = array();
-
-            if($request->has('family')) {
-                $family = Familia::where('nombre', $request->input('family'))->first()->id;
-                $sql_terms[] = "id_familia EQUALS '%$family%'";
+            $sql_terms = array();
+            if(!empty($request->family)) {
+                $family = $request->family;
+                $sql_terms[] = "familia_id = ".$family;
             }
             
-            if($request->has('searchterm')) {
+            if(!empty($request->searchterm)) {
                 $searchTerms = preg_replace("/[^A-Za-z0-9 ]/", '', $request->input('searchterm'));
                 $searchTermsArray = preg_split('/\s+/', $searchTerms, -1, PREG_SPLIT_NO_EMPTY);
                 $searchTermBits = array();
                 foreach($searchTermsArray as $term) {
                     $term = trim($term);
                     if(!empty($term)) {
-                        $searchTermBits[] = "nombre LIKE '%$term%'";
+                        $searchTermBits[] = "(nombre LIKE '%$term%' OR descripcion LIKE '%$term%')";
                     }
                 }
                 $sql_article = implode(' AND ', $searchTermBits);
                 $sql_terms[] = $sql_article; 
             } 
 
-            if($request->has('minimumPrice')) {
+            if(!empty($request->minimumPrice)) {
                 $minimumPrice = $request->input('minimumPrice');
-                $sqlTerms[] = "precio >= '%$minimumPrice%'";
+                $sql_terms[] = "precio >= ".$minimumPrice;
             }
-            if($request->has('maximumPrice')) {
+            if(!empty($request->maximumPrice)) {
                 $maximumPrice = $request->input('maximumPrice');
-                $sqlTerms[] = "precio <= '%$maximumPrice%'";
+                $sql_terms[] = "precio <= ".$maximumPrice;
             }
 
-            $sql_query = implode(' AND ', $sqlTerms);
-            $bids = DB::table('articulos')->whereRaw($sql_query);
-            return view('pages/search', ['result'=>$bids]);
+            $sql_query = implode(' AND ', $sql_terms);
+            
+            // echo "aa".($sql_terms[0]);
+            // echo ($sql_query);
+            // $items = Articulo::whereRaw("familia_id = 1 and (nombre = '%ta%' OR descripcion = '%ta%')")->count();
+            // echo (($items));
+            // $items = Articulo::where('familia_id', 'equals', $family);
+            // $items = Articulo::all();
+            $items = DB::select(DB::raw("SELECT * FROM articulos WHERE ".$sql_query));
+            return view('pages/search', compact('items'));
         }
     }
 

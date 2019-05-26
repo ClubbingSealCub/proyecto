@@ -10,7 +10,7 @@
                 <?php
                 foreach ($families as $family) {
                     ?>
-                    <option value="{{$family}}">{{$family}}</option>
+                    <option value="{{$family->id}}">{{$family->nombre}}</option>
                     <?php
                 }
                 ?>
