@@ -5,15 +5,14 @@
     <h1>{{ $user->name }} ({{ $user->email }})</h1>
 </div>
 <div class="row">
-    
     <?php
     if(count($user->articulos) == 0) {
         ?>
-        <p>{{$user->name}} todavía no tiene artículos en subasta.</p>
+        <h3>{{$user->name}} todavía no tiene artículos en subasta.</h3><br/>
         <?php
     } else {
         ?>
-        <p>Los Artículos en subasta de {{ $user->name }} </p><br/>
+        <h3>Los Artículos en subasta de {{ $user->name }} </h3><br/>
         <?php
     }
     ?>
@@ -27,8 +26,43 @@
                     <img src="{{asset('images/item.png')}}" class="float-right col-md-3" style="top:0; right:0; position:absolute;">
                     <h4>Precio actual: {{$item->precio}}€</h4>
                     <h4 class="float-right">{{$item->ends_at < date("Y-m-d H:i:s") ? "Finalizado" : "Activo" }}</h4>
-                </a></div>
-                <?php          
-            }
+                </a>
+            </div>
+            <?php          
+        }
+        ?>
+    </div>
+</div>
+<hr/>
+<div class="row">
+    <?php
+    if(count($user->pujas) == 0) {
+        ?>
+        <h3>{{$user->name}} todavía no ha pujado en artículos.</h3><br/>
+        <?php
+    } else {
+        ?>
+        <h3>Las pujas de {{ $user->name }} </h3><br/>
+        <br/>
+        <?php
+    }
+    ?>
+    </div>
+    <div class="row">
+        <?php
+        foreach ($user->pujas as $puja) {
             ?>
-            @endsection
+            <div class='item-border col-md-3 col-xs-12'>
+                <a href="{{route('showItem', $puja->articulo->id)}}">
+                    <h3>{{$puja->articulo->nombre}}</h3>
+                    <img src="{{asset('images/bid.png')}}" class="float-right col-md-3" style="top:0; right:0; position:absolute;">
+                    <h4>Valor puja: {{$puja->valor}}€</h4>
+                    <h4 class="float-right">{{$item->ends_at < date("Y-m-d H:i:s") ? "Finalizado" : "Activo" }}</h4>
+                </a>
+            </div>
+            <?php          
+        }
+        ?>
+    </div>
+</div>
+@endsection
