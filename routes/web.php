@@ -26,9 +26,15 @@ Route::get('user/{userID}', ['uses' => 'UserController@show'])->name('user');
 
 Route::post('createbid', ['uses' => 'PujaController@create'])->name('createBid');
 
+// Route::post('payment', ['uses' => 'ArticuloController@checkValidity'])->name('payment');
+// Route::view('payment', 'payment', ['name' => 'payment']);
+Route::post('payment', ['uses' => 'ArticuloController@checkValidity'])->name('payment');
+
+Route::get('payitem', ['uses' => 'ArticuloController@pay'])->name('payItem');
+
 Route::get('bidsearch', ['uses' => 'FamiliaController@getAllFamiliesSearch'])->name('bidSearch');
 
-Route::get('search', ['uses' => 'ArticuloController@SearchByTerms'])->name('search');
+Route::get('search', ['uses' => 'ArticuloController@searchByTerms'])->name('search');
 
 Auth::routes();
 

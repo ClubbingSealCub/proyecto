@@ -17,8 +17,7 @@
                             "&maximumPrice=" + maxPrice;
             xhr.open("GET", "search?" + attributes, true);
             xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            
-            xhr.send(attributes);
+            xhr.send();
         }
     </script>
     </head>
@@ -27,21 +26,35 @@
         {{ csrf_field() }}
         <table class="form-group">
             <tr>
-                <td> <input class="form-control" type="text" name="searchterm" id="searchterm" placeholder="Búsqueda"></td>
-                <td> <select class="form-control" type="select" name="family" id="family" placeholder="Familia"> 
+                <td style="width:60%"> <input class="form-control" type="text" name="searchterm" id="searchterm" placeholder="Nombre o descripción"
+                    oninput="search(document.getElementById('searchterm').value, 
+                                        document.getElementById('family').value,
+                                        document.getElementById('minimumPrice').value,
+                                        document.getElementById('maximumPrice').value);"></td>
+                <td style="width:10%"> <select class="form-control" type="select" name="family" id="family" placeholder="Familia"
+                    onchange="search(document.getElementById('searchterm').value, 
+                                        document.getElementById('family').value,
+                                        document.getElementById('minimumPrice').value,
+                                        document.getElementById('maximumPrice').value);"> 
                     <?php
                     foreach ($families as $family) {
                         echo ("<option value=\"".$family->id."\">".$family->nombre."</option>");
                     }
                     ?>
                 </select></td>
-                <td> <input class="form-control" type="number" name="minimumPrice" id="minimumPrice" placeholder="Precio mínimo"></td>
-                <td> <input class="form-control" type="number" name="maximumPrice" id="maximumPrice" placeholder="Precio máximo"></td>    
-                <td> <input class="btn btn-primary" type="submit" name="search" value="Búsqueda" 
-                    onclick="search(document.getElementById('searchterm').value, 
+                <td style="width:10%"> <input class="form-control" type="number" name="minimumPrice" id="minimumPrice" placeholder="Precio mínimo"
+                    oninput="search(document.getElementById('searchterm').value, 
                                         document.getElementById('family').value,
                                         document.getElementById('minimumPrice').value,
-                                        document.getElementById('maximumPrice').value);"> </td>
+                                        document.getElementById('maximumPrice').value);"></td>
+                <td style="width:10%"> <input class="form-control" type="number" name="maximumPrice" id="maximumPrice" placeholder="Precio máximo"
+                    oninput="search(document.getElementById('searchterm').value, 
+                                        document.getElementById('family').value,
+                                        document.getElementById('minimumPrice').value,
+                                        document.getElementById('maximumPrice').value);"></td>    
+                <td style="width:10%"><img src="{{asset('images/search.png')}}" style="max-width:50px" class="col-md-3" style="top:0; right:0; position:absolute;"> </td>
+                
+
             </tr>
         </table>
 

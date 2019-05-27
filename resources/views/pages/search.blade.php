@@ -2,7 +2,7 @@
     <thead>
         <th colspan="1">Nombre</th>
         <th colspan="4">Descripción</th>
-        <th colspan="1">Máx Bid</th>
+        <th colspan="1">Puja a superar</th>
         <th colspan="3">Familia</th>
         <th colspan="3">Acaba</th>
     </thead>
@@ -12,13 +12,11 @@
 foreach ($items as $item) {
 ?>
         <tr>
-            <td>{{$item->nombre}}</td>
-            <td>{{$item->descripcion}}</td>
-            {{-- <td>{{$item->highestBid()}}€</td> --}}
-            <td>{{$item->precio}}€</td>
-            {{-- <td>{{$item->familia->nombre}}</td> --}}
-            <td>{{$item->familia_id}}</td>
-            <td>{{$item->ends_at}}</td>
+            <td colspan="1">{{$item->nombre}}</td>
+            <td colspan="4">{{$item->descripcion}}</td>
+            <td colspan="1">{{$item->highestBid()}}€</td>
+            <td colspan="3">{{$item->familia->nombre}}</td>
+            <td colspan="3">{{$item->ends_at}}</td>
         </tr>
 <?php
 }

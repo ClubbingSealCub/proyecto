@@ -5,15 +5,15 @@ use App\Familia;
 
 @section('content')
 <h1>Subastas que acabarán proximamente. ¡Date prisa! </h1>
-<div id="salesContainer" class="col-md-12">
+<div id="salesContainer" class="col-md-12 border">
     <div class="table table-responsive">
     <table class="table table-bordered table-striped h4 ">
         <thead>
-            <th class="col-md-1">Nombre</th>
-            <th class="col-md-4">Descripción</th>
-            <th class="col-md-1">Precio</th>
-            <th class="col-md-3">Familia</th>
-            <th class="col-md-3">Acaba</th>
+            <th style="width:15%">Nombre</th>
+            <th style="width:40%">Descripción</th>
+            <th style="width:15%">Precio</th>
+            <th style="width:15%">Familia</th>
+            <th style="width:15%">Acaba</th>
         </thead>
         <tbody>
         <?php
@@ -42,15 +42,15 @@ use App\Familia;
 
 
 <h1>Productos que ya se han vendido, ¡sé más rápido la próxima vez ! </h1>
-<div id="pastSales" class="col-md-12">
+<div id="pastSales" class="col-md-12 border">
     <div class="table table-responsive">
     <table class="table table-bordered table-striped h4 ">
         <thead>
-            <th class="col-md-1">Nombre</th>
-            <th class="col-md-4">Descripción</th>
-            <th class="col-md-1">Precio</th>
-            <th class="col-md-3">Familia</th>
-            <th class="col-md-3">Acaba</th>
+            <th style="width:15%">Nombre</th>
+            <th style="width:40%">Descripción</th>
+            <th style="width:15%">Precio</th>
+            <th style="width:15%">Familia</th>
+            <th style="width:15%">Acaba</th>
         </thead>
         <tbody>
         <?php

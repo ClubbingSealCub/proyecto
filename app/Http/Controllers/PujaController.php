@@ -31,20 +31,15 @@ class PujaController extends Controller
         
         $articulo = \App\Articulo::find($articulo_id);
 
-        if ($articulo->HighestBid()->valor < $valor){
+        if ($articulo->HighestBid() < $valor){
             $puja = new Puja();
-        
             $puja->user_id = $user_id;
             $puja->articulo_id = $articulo_id;
             $puja->valor = $valor;   
-            
             $puja->save();
-
             return \Redirect::route('showItem', $puja->articulo_id)->with('success','¡Tu puja ha sido aceptada!');
-            
         }else{
             return \Redirect::route('showItem', $articulo_id)->with('error','¡Tu puja es demasiado baja!');
-
         }
 
 
