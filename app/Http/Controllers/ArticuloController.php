@@ -106,9 +106,9 @@ class ArticuloController extends Controller
             }
         }
         
-        public function pay($id) 
+        public function pay(Request $request) 
         {
-            if($id) 
+            if(!empty($request)) 
             {
                 //
             }

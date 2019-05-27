@@ -3,7 +3,7 @@
 
 <div class="row">
     <div class="col-md-6 col-md-offset-3">
-        <form method="get" action="" class="payment form">
+        <form method="get" action="{{route('payItem')}}" class="payment form">
             <div class="form-group">
                 <div class="col-12">
                     <div class="col-12 container" id="send_data_container">
