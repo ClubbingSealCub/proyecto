@@ -36,9 +36,10 @@
             <div class="container">
                 <h1>
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ 'Home' }}
+                        <h1>{{ 'YouBuy' }}</h1>
                     </a>
                 </h1>
+                
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -68,13 +69,13 @@
                             </a>
                             
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                    onclick="event.preventDefault();
-                                    document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
-                                    </a>
-                                    <a class="dropdown-item" href="{{ route('user', Auth::id()) }}">Perfil
-                                </a>
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();">
+                                {{ __('Logout') }}
+                            </a>
+                            <a class="dropdown-item" href="{{ route('user', Auth::id()) }}">Perfil
+                            </a>
                             
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                 @csrf
@@ -82,12 +83,19 @@
                         </div>
                     </li>
                     @endguest
+                    
                 </ul>
+                <h3>
+                    <a class="navbar-button" href="{{ url('/bidsearch') }}">
+                        <img src="{{asset('images/search.png')}}" style="max-width:40px">
+                    </a>
+                </h3>
+                
                 <a href="{{route('addItem')}}" class="white  btn btn-xl btn-primary">                        
-                <h4>
-                    ¡Subastar!
-                </h4>
-                </a>
+                    <h4>
+                        ¡Subastar!
+                    </h4>
+                </a>                
             </div>
         </div>
     </nav>

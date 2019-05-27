@@ -58,6 +58,8 @@
             </tr>
         </table>
 
-        <div id="searchResult"></div>
+        <div id="searchResult">
+            <h4> Introduzca algún dato para buscar. </h4>
+        </div>
         @endsection
 
