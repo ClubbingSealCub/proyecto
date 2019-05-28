@@ -110,7 +110,36 @@ class ArticuloController extends Controller
         {
             if(!empty($request)) 
             {
-                //
+                $paid_item = Articulo::find($request->articulo_id);
+                $paid_item->paid = true;
+                $paid_item->save();
+                return \Redirect::route('showItem', $request->articulo_id);
+            //     $cardname = $request->cardname;
+            //     $cardnumber = $request->cardnumber;
+            //     $expmonth = $request->expmonth;
+            //     $expyear = $request->expyear;
+            //     $cvv = $request->cvv;
+            //     $cardnumber = preg_replace('/\D/', '', $cardnumber);
+            //     $cn_length = strlen($cardnumber);
+            //     $cn_parity = $cn_length % 2;
+            //     $total = 0;
+            //     for ($i=0; $i < $cn_length; $i++) { 
+            //         $digit = $cardnumber[$i];
+            //         if($i%2 == $cn_parity) {
+            //             $digit *= 2;
+            //             if($digit>9) {
+            //                 $digit-=9;
+            //             }
+            //         }
+            //         $total+=$digit;
+            //     }
+            //     if($total % 10 == 0) {
+            //     } else {
+            //         // return back()->with('error', 'El número de tarjeta es incorrecto');
+            //         // return redirect()->action('ArticuloController@checkValidity', [$request])->with('error', 'El número de tarjeta es incorrecto');;
+            //         return redirect('payment')->with('error', 'El número de tarjeta es incorrecto');
+            //     }
+     
             }
         }
         

@@ -7,7 +7,7 @@ use App\Familia;
 <h1>Subastas que acabarán proximamente. ¡Date prisa! </h1>
 <div id="salesContainer" class="col-md-12 border">
     <div class="table table-responsive">
-        <table class="table table-bordered table-striped h4 ">
+        <table class="table table-bordered table-striped h4">
             <thead>
                 <th style="width:15%">Nombre</th>
                 <th style="width:40%">Descripción</th>
@@ -27,7 +27,7 @@ use App\Familia;
                                 </a>
                             </td>
                             <td>{{$line->descripcion}}</td>
-                            <td>{{$line->precio}}</td>
+                            <td>{{$line->highestBid()}}€</td>
                             <td>{{$line->familia->nombre}}</td>
                             <td>{{$line->ends_at}}</td>
                         </tr>
@@ -63,7 +63,7 @@ use App\Familia;
                                     </a>
                                 </td>
                                 <td>{{$line->descripcion}}</td>
-                                <td>{{$line->precio}}</td>
+                                <td>{{$line->highestBid()}}€</td>
                                 <td>{{$line->familia->nombre}}</td>
                                 <td>{{$line->ends_at}}</td>
                             </tr>

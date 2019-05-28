@@ -39,7 +39,11 @@
                         <h1>{{ 'YouBuy' }}</h1>
                     </a>
                 </h1>
-                
+                <h3>
+                    <a class="navbar-button" href="{{ url('/bidsearch') }}">
+                        <img src="{{asset('images/search.png')}}" style="max-width:40px">
+                    </a>
+                </h3>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -52,14 +56,32 @@
                     
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">    
+                            @auth
+                            <div>
+                                <?php
+                                if(\Auth::user()->messages->where('seen', false)->count() > 0) {
+                                    $counter = 0;
+                                    foreach (\Auth::user()->messages->where('seen', false) as $message) {
+                                        $counter++;    
+                                    }
+                                    ?>
+                                    <h3>{{$counter}} <a href="{{ route('showMessages') }}"><img src="{{asset('images/message.png')}}" style="max-width:40px"></a>
+                                    </h3>
+                                    <?php
+                                }
+                                ?>
+                            </div>
+                            @endauth
+                        </li>
                         <!-- Authentication Links -->
                         @guest
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                            <a class="nav-link" href="{{ route('login') }}">{{ __('Iniciar Sesión') }}</a>
                         </li>
                         @if (Route::has('register'))
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                            <a class="nav-link" href="{{ route('register') }}">{{ __('Registro') }}</a>
                         </li>
                         @endif
                         @else
@@ -72,9 +94,11 @@
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();">
-                                {{ __('Logout') }}
+                                {{ __('Cerrar Sesión') }}
                             </a>
                             <a class="dropdown-item" href="{{ route('user', Auth::id()) }}">Perfil
+                            </a>
+                            <a class="dropdown-item" href="{{ route('showMessages') }}">Mensajes
                             </a>
                             
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -83,19 +107,17 @@
                         </div>
                     </li>
                     @endguest
-                    
+                    @auth
+                    <li class="nav-item">
+                        <a href="{{route('addItem')}}" class="white  btn btn-xl btn-primary">                        
+                            <h4>
+                                ¡Subastar!
+                            </h4>
+                        </a>     
+                    </li>
+                    @endauth           
                 </ul>
-                <h3>
-                    <a class="navbar-button" href="{{ url('/bidsearch') }}">
-                        <img src="{{asset('images/search.png')}}" style="max-width:40px">
-                    </a>
-                </h3>
                 
-                <a href="{{route('addItem')}}" class="white  btn btn-xl btn-primary">                        
-                    <h4>
-                        ¡Subastar!
-                    </h4>
-                </a>                
             </div>
         </div>
     </nav>

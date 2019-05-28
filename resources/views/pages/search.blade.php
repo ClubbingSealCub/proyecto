@@ -12,7 +12,7 @@
 foreach ($items as $item) {
 ?>
         <tr>
-            <td colspan="1">{{$item->nombre}}</td>
+            <td colspan="1"><a href="{{route('showItem', $item->id)}}"> {{$item->nombre}}</a></td>
             <td colspan="4">{{$item->descripcion}}</td>
             <td colspan="1">{{$item->highestBid()}}€</td>
             <td colspan="3">{{$item->familia->nombre}}</td>

@@ -24,6 +24,8 @@ Route::get('item/{id}', ['uses' => 'ArticuloController@show'])->name('showItem')
 
 Route::get('user/{userID}', ['uses' => 'UserController@show'])->name('user');
 
+Route::view('/messages', 'pages/messages')->name('showMessages'); 
+
 Route::post('createbid', ['uses' => 'PujaController@create'])->name('createBid');
 
 // Route::post('payment', ['uses' => 'ArticuloController@checkValidity'])->name('payment');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Puja;
 use Illuminate\Http\Request;
 use Auth;
+use App\Message;
 
 class PujaController extends Controller
 {
@@ -31,7 +32,18 @@ class PujaController extends Controller
         
         $articulo = \App\Articulo::find($articulo_id);
 
-        if ($articulo->HighestBid() < $valor){
+        if ($articulo->highestBid() < $valor){
+
+            if(!empty($articulo->highestBidder())) {
+                $message = new Message();
+                $message->user_id = $articulo->highestBidder()->id;
+                $message->content = "Tu puja en el artículo ".$articulo->nombre." ha sido superada.";
+                $message->seen = false;
+                $message->created_at = date('Y-m-d H:i:s');
+                $message->articulo_id = $articulo->id;
+                $message->save();
+            }
+
             $puja = new Puja();
             $puja->user_id = $user_id;
             $puja->articulo_id = $articulo_id;
@@ -51,21 +63,21 @@ class PujaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        if(!empty($request)) {
-            $item_id = $request->item;
-            $user_id = \Auth::user()->id;
-            $price = $request->price;
-            DB::table('pujas')->insertGetID([
-                'id_usuario' => $user_id,
-                'id_articulo' => $item_id,
-                'precio' => $price,
-                'created_at' => date("Y-m-d H:i:s")
-            ]);
-            return view('item/'.$id);
-        }
-    }
+    // public function store(Request $request)
+    // {
+    //     if(!empty($request)) {
+    //         $item_id = $request->item;
+    //         $user_id = \Auth::user()->id;
+    //         $price = $request->price;
+    //         DB::table('pujas')->insertGetID([
+    //             'id_usuario' => $user_id,
+    //             'id_articulo' => $item_id,
+    //             'precio' => $price,
+    //             'created_at' => date("Y-m-d H:i:s")
+    //         ]);
+    //         return view('item/'.$id);
+    //     }
+    // }
 
     /**
      * Display the specified resource.

@@ -9,6 +9,8 @@
                     <div class="col-12 container" id="send_data_container">
                         <h3>Datos de envío</h3>
                         <label for="adr"><i class="fa fa-address-card-o"></i> Dirección</label>
+                        <input class="form-control" type="hidden" value="{{$item_id}}" id="articulo_id" name="articulo_id">
+                        <input class="form-control" type="hidden" value="{{\Auth::id()}}" id="user_id" name="user_id">
                         <input class="form-control" type="text" id="address" name="address" placeholder="Calle Falsa 123">
                         <br/>
                         <div class="col-md-4">
@@ -28,21 +30,22 @@
                     <div class="col-12 container" id="pay_data_container">
                         <h3>Datos de pago</h3>
                         <div class="col-md-4">
-                            <label for="cname">Nombre</label>
-                            <input class="inline-form" type="text" id="cname" name="cardname" placeholder="John More Doe">
+                            <label for="cardname">Nombre</label>
+                            <input class="inline-form" type="text" id="cardname" name="cardname" placeholder="Nombre">
                         </div>
                         <div class="col-md-4">
-                            <label for="ccnum">Número</label>
-                            <input class="inline-form" type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444">
+                            <label for="cardnumber">Número</label>
+                            <input class="inline-form" type="text" id="cardnumber" name="cardnumber" placeholder="1111-2222-3333-4444">
                         </div>
                         <div class="col-md-4">
-                            <label for="expmonth">Fecha Expiración</label>
-                            <input class="inline-form" type="text" id="expmonth" name="expmonth" placeholder="September">
+                            <label for="expmonth">Mes Expiración</label>
+                            <input class="inline-form" type="text" id="expmonth" name="expmonth" placeholder="Mayo">
+                            {{-- <input class="inline-form" type="text" id="expmonth" name="expmonth" placeholder="{{date("F")}}"> --}}
                         </div>
                         <br/>
                         <div class="col-md-4">
                             <label for="expyear">Año Expiración</label>
-                            <input class="inline-form" type="text" id="expyear" name="expyear" placeholder="2018">
+                            <input class="inline-form" type="text" id="expyear" name="expyear" placeholder="{{date("Y")}}">
                         </div>
                         <div class="col-md-4">
                             <label for="cvv">CVV</label>

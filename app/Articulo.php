@@ -20,7 +20,6 @@ class Articulo extends Model
         return $this->hasMany('App\Puja');
     }
 
-
     public function user()
     {
         return $this->belongsTo('App\User');
@@ -47,6 +46,11 @@ class Articulo extends Model
         }else{ 
             return $this->precio;
         }
-        
     }
+
+    public function messages()
+    {
+        return $this->hasMany('App\Message');
+    }
+
 }
