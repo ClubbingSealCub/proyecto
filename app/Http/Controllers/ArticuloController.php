@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Auth;
 use App\Familia;
 use App\Articulo;
-
+use App\Jobs\HighestBids;
 class ArticuloController extends Controller
 {
     /**
@@ -63,7 +63,10 @@ class ArticuloController extends Controller
                 'created_at'=> $created_at,
                 'ends_at'=>$ends_at
                 ]);
-                return \Redirect::route('showItem', $articulo)->with('success','¡Tu subasta se ha creado satisfactoriamente!');
+            $articuloobj = Articulo::find($articulo);
+            HighestBids::dispatch($articuloobj)->delay($articuloobj->ends_at);
+
+            return \Redirect::route('showItem', $articulo)->with('success','¡Tu subasta se ha creado satisfactoriamente!');
             }
         }
         

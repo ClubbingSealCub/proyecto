@@ -46,23 +46,24 @@
         <?php
     }
     ?>
-    <div class="row">
-        <?php
-        foreach ($user->articulos as $item) {
-            ?>
-            <div class='item-border col-md-3 col-xs-12'>
-                <a href="{{route('showItem', $item->id)}}">
-                    <h3>{{$item->nombre}}</h3>
-                    <img src="{{asset('images/item.png')}}" class="float-right col-md-3" style="top:0; right:0; position:absolute;">
-                    <h4>Precio actual: {{$item->precio}}€</h4>
-                    <h4 class="float-right">{{$item->ends_at < date("Y-m-d H:i:s") ? "Finalizado" : "Activo" }}</h4>
-                </a>
-            </div>
-            <?php          
-        }
-        ?>
-    </div>
 </div>
+<div class="row">
+    <?php
+    foreach ($user->articulos as $item) {
+        ?>
+        <div class='item-border col-md-3 col-xs-12'>
+            <a href="{{route('showItem', $item->id)}}">
+                <h3>{{$item->nombre}}</h3>
+                <img src="{{asset('images/item.png')}}" class="float-right col-md-3" style="top:0; right:0; position:absolute;">
+                <h4>Precio actual: {{$item->precio}}€</h4>
+                <h4 class="float-right">{{$item->ends_at < date("Y-m-d H:i:s") ? "Finalizado" : "Activo" }}</h4>
+            </a>
+        </div>
+        <?php          
+    }
+    ?>
+</div>
+
 <hr/>
 <div class="row">
     <?php
@@ -80,11 +81,15 @@
 </div>
 <div class="row">
     <?php
-    foreach ($user->pujas as $puja) {
+    // foreach ($user->pujas->where('articulo_id', "distinct") as $puja) {
+        $result = DB::select(DB::raw("SELECT articulo_id,  MAX(VALOR) as valor FROM articulos, pujas WHERE articulos.id= pujas.articulo_id and pujas.user_id = " . \Auth::id() . " GROUP BY articulo_id order by articulo_id desc"));
+        $pujas = \App\Puja::hydrate($result);
+        
+        foreach ($pujas as $puja) {
         ?>
         <div class='item-border col-md-3 col-xs-12'>
             <a href="{{route('showItem', $puja->articulo->id)}}">
-                <h3>{{$puja->articulo->nombre}}</h3>
+                <h3>{{$puja->articulo->nombre}}&nbsp{{$puja->articulo->id}}</h3>
                 <img src="{{asset('images/bid.png')}}" class="float-right col-md-3" style="top:0; right:0; position:absolute;">
                 <h4>Valor puja: {{$puja->valor}}€</h4>
                 <h4 class="float-right">{{$item->ends_at < date("Y-m-d H:i:s") ? "Finalizado" : "Activo" }}</h4>
