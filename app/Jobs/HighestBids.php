@@ -41,9 +41,9 @@ class HighestBids implements ShouldQueue
             $message = new Message();
             $message->seen = false;
             $message->created_at = date('Y-m-d H:i:s');
-            $mensaje->user_id = $puja_ganadora->user_id;
-            $mensaje->articulo_id = $puja_ganadora->articulo_id;
-            $mensaje->content = "Has ganado la subasta!";
+            $message->user_id = $puja_ganadora->user_id;
+            $message->articulo_id = $puja_ganadora->articulo_id;
+            $message->content = "Has ganado la subasta!";
             $message->save();
             
             foreach ($this->_item->pujas as $puja) {
@@ -51,13 +51,26 @@ class HighestBids implements ShouldQueue
                     $message = new Message();
                     $message->seen = false;
                     $message->created_at = date('Y-m-d H:i:s');
-                    $mensaje->user_id = $puja->user_id;
-                    $mensaje->articulo_id = $puja->articulo_id;
-                    $mensaje->content = "Has ganado la subasta!";
+                    $message->user_id = $puja->user_id;
+                    $message->articulo_id = $puja->articulo_id;
+                    $message->content = "¡Has ganado la subasta!";
                     $message->save();
-                    
-                }        
+                } else {
+                    $message = new Message();
+                    $message->seen = false;
+                    $message->created_at = date('Y-m-d H:i:s');
+                    $message->user_id = $puja->user_id;
+                    $message->articulo_id = $puja->articulo_id;
+                    $message->content = "Has perdido la subasta. ¡Más suerte la próxima vez!";
+                    $message->save();
+                }
             }
         }
+        $message_owner = new Message();
+        $message_owner->seen = false;
+        $message_owner->created_at = date('Y-m-d H:i:s');
+        $message_owner->content = "Ha acabado esta subasta.";
+        $message->articulo_id = $this->_item->id;
+        $message->save();
     }
 }

@@ -49,6 +49,10 @@
     margin-left: 30%;
 }
 
-.icon-search {
-    /* background-image: 'images/search.png'; */
+.create-button{
+    position: relative;
+    margin-top: 10%;
+    /* top: 10px; */
+    margin-left: 15%;
 }
+

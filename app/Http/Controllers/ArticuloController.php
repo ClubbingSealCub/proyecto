@@ -64,8 +64,7 @@ class ArticuloController extends Controller
                 'ends_at'=>$ends_at
                 ]);
             $articuloobj = Articulo::find($articulo);
-            HighestBids::dispatch($articuloobj)->delay($articuloobj->ends_at);
-
+            // HighestBids::dispatch($articuloobj)->delay(now()->addMinutes(5));
             return \Redirect::route('showItem', $articulo)->with('success','¡Tu subasta se ha creado satisfactoriamente!');
             }
         }

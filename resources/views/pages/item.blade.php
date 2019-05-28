@@ -58,25 +58,34 @@
             }
         } else {
             ?>
-            <h2 class='strong'>La subasta acaba a las:</h2><br/><h3 class="text-center"> {{$item->ends_at}}.</h3>
+            <h2 class='strong'>La subasta acaba a las:</h2><h3>{{$item->ends_at}}.</h3>
+            <h2 class='strong'>Puja mínima:</h2><h3> {{$item->highestBid()}}€.</h3>
             <?php
             if(\Auth::check() && \Auth::id() !== $item->user_id) {
-            ?>              
-            </div>
-            <div class="col-md-3 col-xs-12 mini-border"> 
-                <h4>
-                    <form action="{{route('createBid')}}" method="POST">
-                        @csrf
-                        <div class="form-group">
-                            <input class="form-control " type="number" id="valor" name="valor" step="0.01" >
-                            <input type=submit class='btn-primary text-center' value="¡Puja ahora!" style="width:100%" >
-                            <input type="hidden" value="{{$item->id}}" id="articulo_id" name="articulo_id">
-                            <input type="hidden" value="{{\Auth::id()}}" id="user_id" name="user_id">
-                        </div>
-                    </form>
-                </h4>
-            </div>
-            <?php
+                if($item->highestBidder() != \Auth::user()) {
+                    ?>              
+                </div>
+                <div class="col-md-3 col-xs-12 mini-border"> 
+                    <h4>
+                        <form action="{{route('createBid')}}" method="POST">
+                            @csrf
+                            <div class="form-group">
+                                <input class="form-control " type="number" id="valor" name="valor" step="0.01" >
+                                <input type=submit class='btn-primary text-center' value="¡Puja ahora!" style="width:100%" >
+                                <input type="hidden" value="{{$item->id}}" id="articulo_id" name="articulo_id">
+                                <input type="hidden" value="{{\Auth::id()}}" id="user_id" name="user_id">
+                            </div>
+                        </form>
+                    </h4>
+                </div>
+                <?php
+            } else {
+                ?>      </div>
+                <div class="col-md-3 col-xs-12 mini-border"> 
+                    <h4 class="strong">Vas ganando la puja!</h4>
+                </div>
+                <?php
+            }
         } 
         ?>
         <div class="col-md-9" style="margin-top:3em">
